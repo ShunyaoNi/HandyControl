@@ -418,36 +418,6 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-	<Style x:Key="PreviewSliderRepeatButtonHorizontalStyle" TargetType="RepeatButton">
-		<Setter Property="OverridesDefaultStyle" Value="true" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Focusable" Value="false" />
-		<Setter Property="IsTabStop" Value="false" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="RepeatButton">
-					<Border Background="Transparent" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-						<Rectangle Fill="{TemplateBinding Background}" Height="2" />
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-	<Style x:Key="PreviewSliderRepeatButtonVerticalStyle" TargetType="RepeatButton">
-		<Setter Property="OverridesDefaultStyle" Value="true" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Focusable" Value="false" />
-		<Setter Property="IsTabStop" Value="false" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="RepeatButton">
-					<Border Background="Transparent" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-						<Rectangle Fill="{TemplateBinding Background}" Width="2" />
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
 	<Style x:Key="ScrollBarBaseRepeatButton" TargetType="RepeatButton">
 		<Setter Property="OverridesDefaultStyle" Value="true" />
 		<Setter Property="Background" Value="Transparent" />
@@ -1667,10 +1637,10 @@
 			<Border x:Name="TrackBackground" Background="{TemplateBinding Background}" Height="2" VerticalAlignment="center" Margin="9,0" />
 			<Track VerticalAlignment="center" Margin="9,0" x:Name="PART_Track">
 				<Track.DecreaseRepeatButton>
-					<RepeatButton Command="{x:Static Slider.DecreaseLarge}" Background="{DynamicResource PrimaryBrush}" Style="{StaticResource PreviewSliderRepeatButtonHorizontalStyle}" />
+					<RepeatButton Command="{x:Static Slider.DecreaseLarge}" Background="{DynamicResource PrimaryBrush}" Style="{StaticResource SliderRepeatButtonHorizontalStyle}" />
 				</Track.DecreaseRepeatButton>
 				<Track.IncreaseRepeatButton>
-					<RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource PreviewSliderRepeatButtonHorizontalStyle}" />
+					<RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderRepeatButtonHorizontalStyle}" />
 				</Track.IncreaseRepeatButton>
 				<Track.Thumb>
 					<Thumb Margin="-9,0" x:Name="PART_Thumb" Focusable="False" Height="18" OverridesDefaultStyle="True" Template="{StaticResource PreviewSliderThumb}" VerticalAlignment="Center" Width="18" />
@@ -1683,10 +1653,10 @@
 			<Border x:Name="TrackBackground" Background="{TemplateBinding Background}" Width="2" HorizontalAlignment="center" Margin="0,9" />
 			<Track HorizontalAlignment="center" Margin="0,9" x:Name="PART_Track">
 				<Track.DecreaseRepeatButton>
-					<RepeatButton Command="{x:Static Slider.DecreaseLarge}" Background="{DynamicResource PrimaryBrush}" Style="{StaticResource PreviewSliderRepeatButtonVerticalStyle}" />
+					<RepeatButton Command="{x:Static Slider.DecreaseLarge}" Background="{DynamicResource PrimaryBrush}" Style="{StaticResource SliderRepeatButtonVerticalStyle}" />
 				</Track.DecreaseRepeatButton>
 				<Track.IncreaseRepeatButton>
-					<RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource PreviewSliderRepeatButtonVerticalStyle}" />
+					<RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderRepeatButtonVerticalStyle}" />
 				</Track.IncreaseRepeatButton>
 				<Track.Thumb>
 					<Thumb Margin="0,-9" x:Name="PART_Thumb" Focusable="False" Height="18" OverridesDefaultStyle="True" Template="{StaticResource PreviewSliderThumb}" HorizontalAlignment="Center" Width="18" />
@@ -1798,7 +1768,6 @@
 								<Path x:Name="PathIcon" Width="{TemplateBinding hc:IconElement.Width}" Height="{TemplateBinding hc:IconElement.Height}" Fill="{TemplateBinding Foreground}" SnapsToDevicePixels="True" Stretch="Uniform" Data="{TemplateBinding hc:IconSwitchElement.Geometry}" />
 							</ContentControl>
 						</Border>
-						<Border Visibility="Collapsed" CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" x:Name="BorderChecked" BorderThickness="4" BorderBrush="{TemplateBinding BorderBrush}" />
 					</hc:SimplePanel>
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsChecked" Value="True">
@@ -1885,18 +1854,10 @@
 						<Viewbox>
 							<hc:SimplePanel Width="80" Height="48">
 								<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="24" Name="innerBorder">
-									<hc:ToggleBlock HorizontalAlignment="Right" Margin="0 0 12 0" IsChecked="{Binding Path=(hc:ToggleButtonAttach.ShowLabel),RelativeSource={RelativeSource TemplatedParent}}">
-										<hc:ToggleBlock.CheckedContent>
-											<Ellipse Width="16" Height="16" StrokeThickness="2" Stroke="{Binding Path=(hc:VisualElement.HighlightForeground),RelativeSource={RelativeSource TemplatedParent}}" />
-										</hc:ToggleBlock.CheckedContent>
-									</hc:ToggleBlock>
+									<Ellipse HorizontalAlignment="Right" Visibility="{Binding Path=(hc:ToggleButtonAttach.ShowLabel), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Boolean2VisibilityConverter}}" Margin="0 0 12 0" Width="16" Height="16" StrokeThickness="2" Stroke="{Binding Path=(hc:VisualElement.HighlightForeground),RelativeSource={RelativeSource TemplatedParent}}" />
 								</Border>
 								<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0" x:Name="lightBorder" Background="{Binding Path=(hc:VisualElement.HighlightBrush),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="24">
-									<hc:ToggleBlock HorizontalAlignment="Left" Margin="18 0 0 0" IsChecked="{Binding Path=(hc:ToggleButtonAttach.ShowLabel),RelativeSource={RelativeSource TemplatedParent}}">
-										<hc:ToggleBlock.CheckedContent>
-											<Rectangle Width="3" Height="16" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource TextIconBrush}" />
-										</hc:ToggleBlock.CheckedContent>
-									</hc:ToggleBlock>
+									<Rectangle HorizontalAlignment="Left" Visibility="{Binding Path=(hc:ToggleButtonAttach.ShowLabel), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Boolean2VisibilityConverter}}" Margin="18 0 0 0" Width="2" Height="16" RadiusX="1" RadiusY="1" Fill="{DynamicResource TextIconBrush}" />
 								</Border>
 								<Border Margin="2" HorizontalAlignment="Left" CornerRadius="22" Name="thumb" Effect="{StaticResource EffectShadow2}" Background="White" Width="44" Height="44" RenderTransformOrigin="0.5,0.5">
 									<Border.RenderTransform>
@@ -3049,14 +3010,15 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="RadioButton">
-					<Border CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
-						<Border Name="BorderHighlight" BorderThickness="3,0,0,0" BorderBrush="Transparent">
+					<hc:SimplePanel>
+						<Border CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}">
 								<Path x:Name="PathMain" Height="{Binding Path=(hc:IconElement.Height),RelativeSource={RelativeSource TemplatedParent}}" Width="{Binding Path=(hc:IconElement.Width),RelativeSource={RelativeSource TemplatedParent}}" Fill="{TemplateBinding Foreground}" SnapsToDevicePixels="True" Stretch="Uniform" Data="{TemplateBinding hc:IconElement.Geometry}" />
 								<ContentPresenter x:Name="ContentPresenterMain" RecognizesAccessKey="True" VerticalAlignment="Center" Margin="6,0,0,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 							</StackPanel>
 						</Border>
-					</Border>
+						<Border Name="BorderHighlight" BorderThickness="3,0,0,0" BorderBrush="Transparent" />
+					</hc:SimplePanel>
 					<ControlTemplate.Triggers>
 						<Trigger Property="Content" Value="{x:Null}">
 							<Setter Property="Visibility" Value="Collapsed" TargetName="ContentPresenterMain" />
@@ -14197,8 +14159,8 @@
 				<ColumnDefinition MinWidth="{TemplateBinding MinWidth}" Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<TickBar x:Name="TopTick" Grid.Column="0" Fill="{TemplateBinding Foreground}" Margin="0,0,2,0" Placement="Left" Visibility="Collapsed" Width="4" />
-			<TickBar x:Name="BottomTick" Grid.Column="2" Fill="{TemplateBinding Foreground}" Margin="2,0,0,0" Placement="Right" Visibility="Collapsed" Width="4" />
+			<TickBar x:Name="LeftTick" Grid.Column="0" Fill="{TemplateBinding Foreground}" Margin="0,0,2,0" Placement="Left" Visibility="Collapsed" Width="4" />
+			<TickBar x:Name="RightTick" Grid.Column="2" Fill="{TemplateBinding Foreground}" Margin="2,0,0,0" Placement="Right" Visibility="Collapsed" Width="4" />
 			<Border x:Name="TrackBackground" Background="{TemplateBinding Background}" Grid.Column="1" HorizontalAlignment="center" Margin="0,9" Width="2">
 				<Canvas x:Name="Canvas_SelectionRange" Visibility="Hidden">
 					<Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource AccentBrush}" Width="2" />
@@ -14232,14 +14194,14 @@
 				<Setter Property="Template" TargetName="Thumb" Value="{StaticResource TipSliderThumbVerticalRight}" />
 			</MultiTrigger>
 			<Trigger Property="TickPlacement" Value="TopLeft">
-				<Setter Property="Visibility" TargetName="TopTick" Value="Visible" />
+				<Setter Property="Visibility" TargetName="LeftTick" Value="Visible" />
 			</Trigger>
 			<Trigger Property="TickPlacement" Value="BottomRight">
-				<Setter Property="Visibility" TargetName="BottomTick" Value="Visible" />
+				<Setter Property="Visibility" TargetName="RightTick" Value="Visible" />
 			</Trigger>
 			<Trigger Property="TickPlacement" Value="Both">
-				<Setter Property="Visibility" TargetName="TopTick" Value="Visible" />
-				<Setter Property="Visibility" TargetName="BottomTick" Value="Visible" />
+				<Setter Property="Visibility" TargetName="LeftTick" Value="Visible" />
+				<Setter Property="Visibility" TargetName="RightTick" Value="Visible" />
 			</Trigger>
 			<Trigger Property="IsSelectionRangeEnabled" Value="true">
 				<Setter Property="Visibility" TargetName="Canvas_SelectionRange" Value="Visible" />
@@ -14445,8 +14407,8 @@
 				<ColumnDefinition MinWidth="{TemplateBinding MinWidth}" Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<TickBar x:Name="TopTick" Height="{Binding ActualHeight,ElementName=TrackBackground}" Ticks="{TemplateBinding Ticks}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" IsDirectionReversed="{TemplateBinding IsDirectionReversed}" Grid.Column="0" Fill="{TemplateBinding Foreground}" Margin="0,0,2,0" Placement="Left" Visibility="Collapsed" Width="4" />
-			<TickBar x:Name="BottomTick" Height="{Binding ActualHeight,ElementName=TrackBackground}" Ticks="{TemplateBinding Ticks}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" IsDirectionReversed="{TemplateBinding IsDirectionReversed}" Grid.Column="2" Fill="{TemplateBinding Foreground}" Margin="2,0,0,0" Placement="Right" Visibility="Collapsed" Width="4" />
+			<TickBar x:Name="LeftTick" Height="{Binding ActualHeight,ElementName=TrackBackground}" Ticks="{TemplateBinding Ticks}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" IsDirectionReversed="{TemplateBinding IsDirectionReversed}" Grid.Column="0" Fill="{TemplateBinding Foreground}" Margin="0,0,2,0" Placement="Left" Visibility="Collapsed" Width="4" />
+			<TickBar x:Name="RightTick" Height="{Binding ActualHeight,ElementName=TrackBackground}" Ticks="{TemplateBinding Ticks}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" IsDirectionReversed="{TemplateBinding IsDirectionReversed}" Grid.Column="2" Fill="{TemplateBinding Foreground}" Margin="2,0,0,0" Placement="Right" Visibility="Collapsed" Width="4" />
 			<Border x:Name="TrackBackground" Background="{TemplateBinding Background}" Margin="0,9" Grid.Column="1" HorizontalAlignment="center" Width="2" />
 			<hc:RangeTrack IsDirectionReversed="{TemplateBinding IsDirectionReversed}" Orientation="{TemplateBinding Orientation}" ValueStart="{TemplateBinding ValueStart}" ValueEnd="{TemplateBinding ValueEnd}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Margin="0,9" x:Name="PART_Track" Grid.Column="1">
 				<hc:RangeTrack.DecreaseRepeatButton>
@@ -14484,14 +14446,14 @@
 				<Setter Property="Template" TargetName="ThumbEnd" Value="{StaticResource TipRangeSliderThumbVerticalRight}" />
 			</MultiTrigger>
 			<Trigger Property="TickPlacement" Value="TopLeft">
-				<Setter Property="Visibility" TargetName="TopTick" Value="Visible" />
+				<Setter Property="Visibility" TargetName="LeftTick" Value="Visible" />
 			</Trigger>
 			<Trigger Property="TickPlacement" Value="BottomRight">
-				<Setter Property="Visibility" TargetName="BottomTick" Value="Visible" />
+				<Setter Property="Visibility" TargetName="RightTick" Value="Visible" />
 			</Trigger>
 			<Trigger Property="TickPlacement" Value="Both">
-				<Setter Property="Visibility" TargetName="TopTick" Value="Visible" />
-				<Setter Property="Visibility" TargetName="BottomTick" Value="Visible" />
+				<Setter Property="Visibility" TargetName="LeftTick" Value="Visible" />
+				<Setter Property="Visibility" TargetName="RightTick" Value="Visible" />
 			</Trigger>
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
